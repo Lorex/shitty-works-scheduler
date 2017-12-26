@@ -1,21 +1,33 @@
 # shitty-works-scheduler
+## 公司內浪費才能專案：排值週生
 
-a [Sails v1](https://sailsjs.com) application
+不用我解釋，想也知道這是個排值週生的小程式。
 
+### 安裝
++ 從 github 抓 repo
+```
+$ git clone https://github.com/Lorex/shitty-works-scheduler.git
+```
++ 安裝
+```
+$ npm i
+$ npm i -g sails@beta
+```
++ 執行
+```
+$ sails lift
+```
++ 去網頁查看
+```
+http://<your_domain>:1338
 
-### Links
+### 用法
 
-+ [Get started](https://sailsjs.com/get-started)
-+ [Sails framework documentation](https://sailsjs.com/documentation)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
-
-
-### Version info
-
-This app was originally generated on Tue Dec 26 2017 13:57:21 GMT+0800 (台北標準時間) using Sails v1.0.0-45 _(internally: [`sails-generate@1.15.3`](https://github.com/balderdashy/sails-generate/tree/v1.15.3/lib/core-generators/new))_.
++ 把員工／學生名字加入 `config/schedule.json` 裡面的 `employee` 陣列
++ 把已經當過值週生的員工／學生名字加入 `config/schedule.json` 裡面的 `employeeUsed` 陣列
++ 系統會於每個禮拜排新的值週生
++ 如果已經排完一輪，將會初始化陣列並重新開始一輪排程
++ 啥？你要的是值日生？自己改啊！
 
 
 
