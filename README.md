@@ -20,6 +20,8 @@ $ sails lift
 + 去網頁查看
 ```
 http://<your_domain>:1338
+```
+
 
 ### 用法
 
