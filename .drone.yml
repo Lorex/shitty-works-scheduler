@@ -1,0 +1,64 @@
+workspace:
+  base: /data/apps/opt
+  path: shitty-works
+
+pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /data/apps/opt/shitty-works/cache:/cache
+    # when:
+      # branch: master
+
+  dockerize-production:
+    image: plugins/docker
+    repo: 172.31.17.15:5000/goodoit-api
+    registry: 172.31.17.15:5000
+    insecure: true
+    tags: 'latest'
+    dockerfile: ./Dockerfile
+    context: ./
+    # when:
+      # branch: master
+
+  deploy-production:
+    image: appleboy/drone-ssh
+    host: 13.114.131.241
+    username: deploy
+    volumes:
+      - /home/deploy/.ssh/drone_rsa.pem:/root/ssh/drone_rsa.pem
+    key_path: /root/ssh/drone_rsa.pem
+    port: 22
+    script:
+      - /data/apps/opt/shitty-works/deploy.sh
+    # when:
+      # branch: master
+
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /data/apps/opt/shitty-works/cache:/cache
+    # when:
+      # branch: master
+
+  slack:
+    image: plugins/slack
+    webhook: https://hooks.slack.com/services/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
+    channel: dev
+    template: >
+      {{#success build.status}}
+        ${DRONE_REPO_NAME} 已成功完成部署. :robot_face::robot_face::robot_face:
+      {{else}}
+        ${DRONE_REPO_NAME} 部署失敗. 請修正錯誤. :ghost::ghost::ghost:
+      {{/success}}
+       - branch: {{build.branch}}
+       - commit: {{truncate build.commit 8}}
+    when:
+      # branch: master
+      status:  [ failure, success ]
