@@ -3,4 +3,4 @@
 docker-compose down
 docker-compose rm
 docker-compose pull
-docker-compose -p shitty-works up -d
+docker-compose -p $name up -d
