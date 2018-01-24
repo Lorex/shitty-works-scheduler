@@ -12,4 +12,4 @@ RUN npm install --quiet
 # # Bundle app source
 ADD . /usr/src/app
 
-EXPOSE 1338
+EXPOSE 1337
